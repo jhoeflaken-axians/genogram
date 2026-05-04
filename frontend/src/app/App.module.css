@@ -1,0 +1,21 @@
+.shell {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+}
+
+.header {
+    border-bottom: 1px solid var(--mantine-color-default-border);
+    background-color: var(--mantine-color-blue-9) !important;
+    color: var(--mantine-color-white);
+}
+
+.aside {
+    overflow: visible;
+}
+
+
+
+
+
