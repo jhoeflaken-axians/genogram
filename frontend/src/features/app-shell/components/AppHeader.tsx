@@ -6,6 +6,7 @@ import {IconSitemap} from "@tabler/icons-react";
  * The header of the application. It contains the title, main menu, language toggle, login, and settings. The
  * justification is "space-between" so the first element is aligned to the left, and the last element is aligned to the
  * right. The remaining elements are distributed evenly in between.
+ *
  * @constructor
  */
 export const AppHeader: React.FC = () => {
@@ -26,7 +27,7 @@ export const AppHeader: React.FC = () => {
                 >
                     <Group gap="sm" wrap="nowrap">
                         <IconSitemap size={24} stroke={1.5}/>
-                        <Text fw={600} size="lg">OpenGenogram</Text>
+                        <Text fw={600} size="lg">Genogram</Text>
                     </Group>
                 </Group>
 
