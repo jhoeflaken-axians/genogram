@@ -5,6 +5,7 @@ import {Canvas, Inspector, Palette} from "@/features/diagram";
 import {useInspectorResize} from "@/features/diagram/hooks/useInspectorResize.ts";
 
 import appClasses from './App.module.css';
+import {GenogramDiagram} from "@/features/diagram/components/GenogramDiagram.tsx";
 
 /**
  * The main layout of the app. The application has:
@@ -38,7 +39,7 @@ export const AppLayout: React.FC = () => {
                 </AppShell.Navbar>
 
                 <AppShell.Main>
-                    <Canvas />
+                    <GenogramDiagram />
                 </AppShell.Main>
 
                 <AppShell.Aside className={appClasses.aside}>

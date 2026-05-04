@@ -4,7 +4,7 @@
     --aside-border-width: 2px;
     --aside-hover-right-border-width: 3px;
     --aside-border-color: #e9ecef;
-    --aside-handle-top: 16px;
+    --aside-handle-top: 48px;
     --aside-handle-height: 30px;
     --aside-handle-width: 28px;
 }
@@ -33,4 +33,21 @@
 
 .inspectorPanel {
     flex: 1;
+}
+
+.diagramMain {
+    height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    padding: 8px !important;
+}
+
+.diagramToolbar {
+    border-bottom: 1px solid #e9ecef;
+    background: #fff;
+}
+
+.flowWrapper {
+    flex: 1;
+    height: 100% !important;
 }
