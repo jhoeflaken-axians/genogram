@@ -39,10 +39,10 @@
     height: calc(100vh - 48px);
     display: flex;
     flex-direction: column;
-    padding: 8px !important;
 }
 
 .diagramToolbar {
+    padding: 10px 12px;
     border-bottom: 1px solid #e9ecef;
     background: #fff;
 }
