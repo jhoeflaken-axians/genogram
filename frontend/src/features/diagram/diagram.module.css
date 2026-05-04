@@ -6,15 +6,10 @@
     --aside-border-color: #e9ecef;
     --aside-handle-top: 16px;
     --aside-handle-height: 30px;
-    --aside-handle-width: 30px;
+    --aside-handle-width: 28px;
 }
 
 .toggleButton {
-    /*width: 32px;*/
-    /*min-width: 32px;*/
-    /*border: 0;*/
-    /*background: transparent;*/
-    /*cursor: pointer;*/
     position: absolute;
     left: calc(-1 * var(--aside-handle-width));
     top: var(--aside-handle-top);
