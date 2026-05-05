@@ -1,6 +1,4 @@
 import React from "react";
-
-import diagramClasses from '../diagram.module.css';
 import {ActionIcon, Divider, Group, Tooltip} from "@mantine/core";
 import {
     IconArrowBackUp, IconArrowForwardUp, IconArrowsHorizontal, IconArrowsVertical,
@@ -9,7 +7,9 @@ import {
     IconLayoutAlignLeft, IconLayoutAlignRight, IconLayoutAlignTop,
     IconPrinter, IconSitemap,
 } from "@tabler/icons-react";
-import {Background, Controls, MiniMap, ReactFlow} from "@xyflow/react";
+
+import diagramClasses from '../diagram.module.css';
+import {Canvas} from "@/features/diagram";
 
 /**
  * The GenogramDiagram component provides a diagram interface for visualizing family relationships. It includes a
@@ -94,16 +94,7 @@ export const GenogramDiagram: React.FC = () => {
                 </Tooltip>
             </Group>
 
-            <div className={diagramClasses.flowWrapper}>
-                <ReactFlow
-                    fitView
-                    elementsSelectable
-                >
-                    <MiniMap />
-                    <Controls />
-                    <Background />
-                </ReactFlow>
-            </div>
+            <Canvas />
         </div>
     )
 }
