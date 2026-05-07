@@ -33,13 +33,13 @@ export const Palette: React.FC<PaletteProps> = ({ onAddPerson }) => {
             <SimpleGrid cols={1} spacing="xs">
                 {SYMBOL_DEFINITIONS.map((item) => (
                     <Button
-                        key={item.symbol}
+                        key={item.type}
                         variant="light"
                         h={42}
                         fullWidth
                         draggable
-                        onDragStart={(event) => handleDragStart(event, item.symbol)}
-                        onClick={() => onAddPerson(item.symbol)}
+                        onDragStart={(event) => handleDragStart(event, item.type)}
+                        onClick={() => onAddPerson(item.type)}
                         styles={{
                             inner: {
                                 justifyContent: 'flex-start'
@@ -48,7 +48,7 @@ export const Palette: React.FC<PaletteProps> = ({ onAddPerson }) => {
                     >
                         <Group gap="sm" wrap="nowrap" style={{ width: '100%', justifyContent: 'flex-start', alignItems: 'center' }}>
                             <span style={{ width: 28, minWidth: 28, display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <SymbolIcon symbol={item.symbol} size={26} />
+                                <SymbolIcon symbol={item.type} size={26} />
                             </span>
                             <Text fw={600} size="sm" ta="left" style={{ whiteSpace: 'nowrap' }}>{item.label}</Text>
                         </Group>

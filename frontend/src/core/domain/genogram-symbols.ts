@@ -4,7 +4,7 @@ import type {GenogramSymbolType, SexType} from "@/core/domain/genogram.ts";
  * The definition of a genogram symbol.
  */
 export type SymbolDefinition = {
-    symbol: GenogramSymbolType;
+    type: GenogramSymbolType;
     label: string;
     sex: SexType;
 };
@@ -13,19 +13,19 @@ export type SymbolDefinition = {
  * The definitions of all genogram symbols.
  */
 export const SYMBOL_DEFINITIONS: SymbolDefinition[] = [
-    { symbol: 'male', label: 'Male',  sex: 'male' },
-    { symbol: 'female', label: 'Female',  sex: 'female' },
-    { symbol: 'unknown', label: 'Unknown Sex', sex: 'unknown' },
-    { symbol: 'pregnancy', label: 'Pregnancy', sex: 'female' },
-    { symbol: 'stillbirth', label: 'Stillbirth', sex: 'unknown' },
-    { symbol: 'miscarriage', label: 'Miscarriage', sex: 'unknown' },
-    { symbol: 'abortion', label: 'Abortion', sex: 'unknown' },
-    { symbol: 'pet', label: 'Pet', sex: 'unknown' }
+    { type: 'male', label: 'Male',  sex: 'male' },
+    { type: 'female', label: 'Female',  sex: 'female' },
+    { type: 'unknown', label: 'Unknown Sex', sex: 'unknown' },
+    { type: 'pregnancy', label: 'Pregnancy', sex: 'female' },
+    { type: 'stillbirth', label: 'Stillbirth', sex: 'unknown' },
+    { type: 'miscarriage', label: 'Miscarriage', sex: 'unknown' },
+    { type: 'abortion', label: 'Abortion', sex: 'unknown' },
+    { type: 'pet', label: 'Pet', sex: 'unknown' }
 ];
 
 // Map of symbol to sex
 const SYMBOL_TO_SEX_MAP: Record<GenogramSymbolType, SexType> =
-    Object.fromEntries(SYMBOL_DEFINITIONS.map(item => [item.symbol, item.sex])) as Record<GenogramSymbolType, SexType>;
+    Object.fromEntries(SYMBOL_DEFINITIONS.map(item => [item.type, item.sex])) as Record<GenogramSymbolType, SexType>;
 
 /**
  * Get the sex associated with a genogram symbol.

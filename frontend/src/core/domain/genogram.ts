@@ -40,10 +40,7 @@ export type Relation = {
     anchor?: number; // 0.0 to 1.0 along the horizontal line
 };
 
-/**
- * Represents a person node in the genogram.
- */
-export type PersonNode = Node<Person, 'person'>;
+
 
 /**
  * Represents a relation edge in the genogram.
