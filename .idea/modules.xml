@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/open-genogram.iml" filepath="$PROJECT_DIR$/.idea/open-genogram.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/genogram.iml" filepath="$PROJECT_DIR$/.idea/genogram.iml" />
     </modules>
   </component>
 </project>

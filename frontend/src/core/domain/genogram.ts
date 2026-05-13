@@ -1,4 +1,6 @@
 import type { Edge, Node } from '@xyflow/react';
+import type {GenogramNode} from "@/features/diagram/types/nodes.ts";
+import type {GenogramEdge} from "@/features/diagram/types/edges.tsx";
 
 /**
  * Defines the types of sexes in the genogram.
@@ -51,20 +53,20 @@ export type RelationEdge = Edge<Relation>;
 /**
  * Represents a genogram diagram.
  */
-export type Diagram = {
+export type Diagram<TNode extends Node = GenogramNode, TEdge extends Edge = GenogramEdge> = {
     id: string;
     title: string;
-    nodes: PersonNode[];
-    edges: RelationEdge[];
+    nodes: TNode[];
+    edges: TEdge[];
     updatedAt?: string;
 };
 
 /**
  * Represents the selected element in the genogram.
  */
-export type SelectedElement =
-    | { type: 'node', data: Node<PersonNode> }
-    | { type: 'edge', data: Node<RelationEdge> }
+export type SelectedElement<TNode extends Node = GenogramNode, TEdge extends Edge = GenogramEdge> =
+    | { type: 'node', data: TNode }
+    | { type: 'edge', data: TEdge }
     | null;
 
 /**

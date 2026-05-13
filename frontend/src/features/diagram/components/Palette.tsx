@@ -6,7 +6,7 @@ import {SYMBOL_DEFINITIONS} from "@/core/domain/genogram-symbols.ts";
 import type {GenogramSymbolType} from "@/core/domain/genogram.ts";
 
 interface PaletteProps {
-    onAddPerson: (symbol: GenogramSymbolType) => void;
+    onAddPerson?: (symbol: GenogramSymbolType) => void;
 }
 
 /**
@@ -39,7 +39,7 @@ export const Palette: React.FC<PaletteProps> = ({ onAddPerson }) => {
                         fullWidth
                         draggable
                         onDragStart={(event) => handleDragStart(event, item.type)}
-                        onClick={() => onAddPerson(item.type)}
+                        onClick={() => onAddPerson?.(item.type)}
                         styles={{
                             inner: {
                                 justifyContent: 'flex-start'

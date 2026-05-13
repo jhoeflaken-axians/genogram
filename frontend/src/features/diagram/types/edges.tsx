@@ -1,26 +1,53 @@
+import type {Edge} from "@xyflow/react";
+import type {GenogramRelationType} from "@/core/domain/genogram.ts";
 
-export type GenogramEdgeType = 'lineage | relational';
-export type LineageRelationType = 'partner' | 'divorce' | 'parent-child' | 'adoption';
+export type GenogramEdgeType = 'lineage' | 'relational';
 
 /**
- * The base type for all genogram types.
+ * Relation kinds grouped by edge rendering type.
  */
-export type GenogramEdge = {
-    type: GenogramEdgeType;
+export type LineageRelationType = Extract<GenogramRelationType, 'parent-child' | 'adoption'>;
+export type RelationalRelationType = Extract<GenogramRelationType, 'partner' | 'divorce'>;
+
+export const RELATION_EDGE_TYPE_MAP = {
+    partner: 'relational',
+    divorce: 'relational',
+    'parent-child': 'lineage',
+    adoption: 'lineage'
+} as const satisfies Record<GenogramRelationType, GenogramEdgeType>;
+
+type RelationEdgeTypeMap = typeof RELATION_EDGE_TYPE_MAP;
+
+export type EdgeTypeForRelation<R extends GenogramRelationType> = RelationEdgeTypeMap[R];
+
+export type GenogramEdgeDataByType = {
+    lineage: {
+        relation: LineageRelationType;
+        anchorPositionPercentage: number;
+    };
+    relational: {
+        relation: RelationalRelationType;
+    };
 };
 
 /**
- * The edge for lineage relationships.
+ * Edge variant for a specific edge rendering type.
  */
-export type LineageEdge = GenogramEdge & {
-    type: 'lineage';
-    relation: LineageRelationType;
-    anchorPositionPercentage: number;
-}
+export type GenogramEdgeByType<T extends GenogramEdgeType> = Edge<GenogramEdgeDataByType[T], T> & {
+    type: T;
+};
 
 /**
- * The edge for relational relationships.
+ * Edge variant for a specific relation kind.
  */
-export type RelationalEdge = GenogramEdge & {
-    type: 'lineage';
-}
+export type GenogramEdgeByRelation<R extends GenogramRelationType> = GenogramEdgeByType<EdgeTypeForRelation<R>> & {
+    data: GenogramEdgeDataByType[EdgeTypeForRelation<R>] & { relation: R };
+};
+
+export type LineageEdge = GenogramEdgeByType<'lineage'>;
+
+/**
+ * Union of all supported genogram edges.
+ */
+export type RelationalEdge = GenogramEdgeByType<'relational'>;
+export type GenogramEdge = LineageEdge | RelationalEdge;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppShell, useMantineTheme} from "@mantine/core";
 import {AppHeader} from "@/features/app-shell";
-import {Canvas, Inspector, Palette} from "@/features/diagram";
+import {Inspector, Palette} from "@/features/diagram";
 import {useInspectorResize} from "@/features/diagram/hooks/useInspectorResize.ts";
 
 import appClasses from './App.module.css';

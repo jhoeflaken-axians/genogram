@@ -1,13 +1,15 @@
+import React from "react";
 import type {Person} from "@/core/domain/genogram.ts";
 import type {Node, NodeProps} from '@xyflow/react';
 
-type PersonMode = Node<Person, "person">
+import nodeClasses from './nodes.module.css';
 
-export const PersonNode: React.FC<NodeProps<PersonMode>> = ({data}) => {
+type PersonNode = Node<Person, "person" | "pregnancy" | "loss" | "pet">;
+
+export const PersonNode: React.FC<NodeProps<PersonNode>> = () => {
 
     return (
-        <div>
-            {data.lastName}
+        <div className={nodeClasses.card}>
         </div>
     )
 

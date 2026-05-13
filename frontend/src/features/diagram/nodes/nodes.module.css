@@ -1,0 +1,19 @@
+
+.card {
+    background: linear-gradient(160deg, #ffffff 0%, #eef2ff 100%);
+    border: 1.5px solid #bfcbff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.10);
+    padding: 18px 20px 18px 16px;
+    width: 240px;
+    height: 120px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    overflow: visible;
+    transition: box-shadow 140ms ease, border-color 140ms ease;
+    cursor: default;
+}

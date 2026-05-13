@@ -5,10 +5,11 @@ import {Canvas} from "@/features/diagram";
 import diagramClasses from '../diagram.module.css';
 import {Toolbar} from "@/features/diagram/components/Toolbar.tsx";
 import {SYMBOL_DEFINITIONS} from "@/core/domain/genogram-symbols.ts";
-import type {GenogramSymbolType} from "@/core/domain/genogram.ts";
-import {type Edge, type ReactFlowInstance, useEdgesState, useNodesState} from "@xyflow/react";
+import {type ReactFlowInstance, useEdgesState, useNodesState} from "@xyflow/react";
 import type {GenogramEdge} from "../types/edges.tsx";
-import type {GenogramMode, GenogramNode} from "../types/nodes.tsx";
+import type {GenogramNode} from "../types/nodes.ts";
+import {createNewNode} from "@/features/diagram/diagram.ts";
+import type {GenogramSymbolType} from "@/core/domain/genogram.ts";
 /**
  * The GenogramDiagram component provides a diagram interface for visualizing family relationships. It includes a
  * toolbar with actions for saving, printing, auto-layout, lineage highlighting, undo/redo, and alignment/distribution
@@ -18,13 +19,13 @@ import type {GenogramMode, GenogramNode} from "../types/nodes.tsx";
  */
 export const GenogramDiagram: React.FC = () => {
 
-    const [reactFlowInstance, setReactFlowInstance] = React.useState<ReactFlowInstance<GenogramMode, Edge<GenogramEdge>> | null>(null);
-    const [nodes, setNodes, onNodesChangeOriginal] = useNodesState<GenogramNode>([]);
-    const [edges, setEdges, onEdgesChangeOriginal] = useEdgesState<Edge<GenogramEdge>>([]);
+    const [reactFlowInstance, setReactFlowInstance] = React.useState<ReactFlowInstance<GenogramNode, GenogramEdge> | null>(null);
+    const [nodes, setNodes] = useNodesState<GenogramNode>([]);
+    const [edges] = useEdgesState<GenogramEdge>([]);
 
 
-    const [selectedNodeIds, setSelectedNodeIds] = React.useState<string[]>([]);
-    const [highlightLineage, setHighlightLineage] = React.useState(false);
+    const [selectedNodeIds] = React.useState<string[]>([]);
+    const [highlightLineage] = React.useState(false);
 
     /**
      * Handles the drop event on the diagram area. It creates a new node with the symbol type and position of the
@@ -43,14 +44,25 @@ export const GenogramDiagram: React.FC = () => {
             y: event.clientY
         });
 
-        const node = createNewNode(symbolType, position);
+        const node = createNewNode(symbolType as GenogramSymbolType, position);
         setNodes((prev) => [...prev, node]);
+    }, [reactFlowInstance, setNodes]);
+
+    const handleDragOver = React.useCallback((event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
     }, []);
 
     return (
         <div className={diagramClasses.diagramMain}>
             <Toolbar selectedNodes={selectedNodeIds} highlightLineage={highlightLineage}/>
-            <Canvas />
+            <Canvas
+                nodes={nodes}
+                edges={edges}
+                onInit={setReactFlowInstance}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+            />
         </div>
     )
 }
