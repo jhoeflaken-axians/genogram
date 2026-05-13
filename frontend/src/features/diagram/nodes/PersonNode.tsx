@@ -2,7 +2,7 @@ import React from "react";
 import type {Person} from "@/core/domain/genogram.ts";
 import type {Node, NodeProps} from '@xyflow/react';
 import {useReactFlow} from '@xyflow/react';
-import {IconCake, IconCross} from '@tabler/icons-react';
+import {IconCake, IconCross, IconGripVertical} from '@tabler/icons-react';
 import {Box, Group, Stack, Text, TextInput, Textarea} from '@mantine/core';
 import {SymbolIcon} from "@/core/ui/icons/SymbolIcons.tsx";
 import type {GenogramEdge} from "@/features/diagram/types/edges.tsx";
@@ -105,87 +105,96 @@ export const PersonNode: React.FC<NodeProps<PersonNode>> = ({id, data}) => {
 
     return (
         <div className={nodeClasses.card}>
-            <Stack gap={1}>
-                <Group wrap="nowrap" align="flex-start" gap={10}>
-                    <Box w={42} miw={42} pt={2} style={{display: 'flex', justifyContent: 'center'}}>
-                        <SymbolIcon symbol={data.symbol} deceased={data.deceased} size={34}/>
-                    </Box>
-
-                    <Textarea
-                        value={name}
-                        onChange={(event) => {
-                            const next = clampToLines(event.target.value, 3);
-                            setName(next);
-                            updateData({callSign: next});
-                        }}
-                        placeholder="Name"
-                        variant="unstyled"
-                        minRows={3}
-                        maxRows={3}
-                        autosize
-                        classNames={{
-                            input: 'nodrag nowheel'
-                        }}
-                        styles={{
-                            root: {flex: 1, minWidth: 0},
-                            input: {
-                                fontSize: '13px',
-                                fontWeight: 600,
-                                lineHeight: 1.15,
-                                color: '#1f2937',
-                                padding: 0
-                            }
-                        }}
-                    />
-                </Group>
-
+            <Stack gap={2}>
                 <Group wrap="nowrap" align="center" gap={10}>
-                    <Text size="11px" fw={700} c="#495057" ta="center" w={42} miw={42}>
-                        {calculateAge(birthDate, deathDate)}
-                    </Text>
-
-                    <Group wrap="nowrap" align="center" gap={4} style={{flex: 1, minWidth: 0}}>
-                        <TextInput
-                            value={birthDate}
-                            placeholder="dd-MM-yyyy"
-                            onChange={(event) => {
-                                const next = normalizeDateInput(event.target.value);
-                                setBirthDate(next);
-                                updateData({birthDate: next || undefined});
-                            }}
-                            variant="unstyled"
-                            leftSection={<IconCake size={10} stroke={1.8}/>}
-                            leftSectionWidth={14}
-                            classNames={{
-                                input: 'nodrag nowheel'
-                            }}
-                            styles={{
-                                root: {flex: '0 0 82px', minWidth: 82},
-                                input: {fontSize: '10px', color: '#495057', padding: 0, paddingLeft: 16}
-                            }}
-                        />
-
-                        <TextInput
-                            value={deathDate}
-                            placeholder="dd-MM-yyyy"
-                            onChange={(event) => {
-                                const next = normalizeDateInput(event.target.value);
-                                setDeathDate(next);
-                                updateData({deathDate: next || undefined, deceased: Boolean(next.trim())});
-                            }}
-                            variant="unstyled"
-                            leftSection={<IconCross size={10} stroke={1.8}/>}
-                            leftSectionWidth={14}
-                            classNames={{
-                                input: 'nodrag nowheel'
-                            }}
-                            styles={{
-                                root: {flex: '0 0 82px', minWidth: 82},
-                                input: {fontSize: '10px', color: '#495057', padding: 0, paddingLeft: 16}
-                            }}
-                        />
-                    </Group>
+                    <Box w={42} miw={42} style={{display: 'flex', justifyContent: 'flex-start'}}>
+                        <div className={`${nodeClasses.dragHandle} drag-handle`} title="Drag node">
+                            <IconGripVertical size={12} stroke={1.8}/>
+                        </div>
+                    </Box>
                 </Group>
+
+                {/* Grid: left col = symbol+age stacked, right col = name+dates stacked */}
+                <div className={nodeClasses.contentGrid}>
+                    {/* Left column */}
+                    <div className={nodeClasses.leftCol}>
+                        <SymbolIcon symbol={data.symbol} deceased={data.deceased} size={34}/>
+                        <Text size="11px" fw={700} c="#495057" ta="center">
+                            {calculateAge(birthDate, deathDate)}
+                        </Text>
+                    </div>
+
+                    {/* Right column */}
+                    <div className={nodeClasses.rightCol}>
+                        <Textarea
+                            className="nodrag nowheel"
+                            value={name}
+                            onChange={(event) => {
+                                const next = clampToLines(event.target.value, 3);
+                                setName(next);
+                            }}
+                            onBlur={() => updateData({callSign: name})}
+                            placeholder="Name"
+                            variant="unstyled"
+                            rows={3}
+                            autosize={false}
+                            classNames={{input: 'nodrag nowheel'}}
+                            styles={{
+                                root: {width: '100%'},
+                                input: {
+                                    width: '100%',
+                                    minHeight: '3.4em',
+                                    fontSize: '14px',
+                                    fontWeight: 600,
+                                    lineHeight: 1.15,
+                                    color: '#1f2937',
+                                    margin: 0,
+                                    padding: 0,
+                                    resize: 'none'
+                                }
+                            }}
+                        />
+
+                        <Group wrap="nowrap" align="center" gap={4}>
+                            <TextInput
+                                className="nodrag nowheel"
+                                value={birthDate}
+                                placeholder="dd-MM-yyyy"
+                                onChange={(event) => {
+                                    const next = normalizeDateInput(event.target.value);
+                                    setBirthDate(next);
+                                    updateData({birthDate: next || undefined});
+                                }}
+                                variant="unstyled"
+                                leftSection={<IconCake size={10} stroke={1.8}/>}
+                                leftSectionWidth={14}
+                                classNames={{input: 'nodrag nowheel'}}
+                                styles={{
+                                    root: {flex: '0 0 82px'},
+                                    input: {fontSize: '10px', color: '#495057', padding: 0, paddingLeft: 16, userSelect: 'text'}
+                                }}
+                            />
+                            <TextInput
+                                className="nodrag nowheel"
+                                value={deathDate}
+                                placeholder="dd-MM-yyyy"
+                                onChange={(event) => {
+                                    const next = normalizeDateInput(event.target.value);
+                                    setDeathDate(next);
+                                    updateData({deathDate: next || undefined, deceased: Boolean(next.trim())});
+                                }}
+                                variant="unstyled"
+                                leftSection={<IconCross size={10} stroke={1.8}/>}
+                                leftSectionWidth={14}
+                                classNames={{input: 'nodrag nowheel'}}
+                                styles={{
+                                    root: {flex: '0 0 82px'},
+                                    input: {fontSize: '10px', color: '#495057', padding: 0, paddingLeft: 16, userSelect: 'text'}
+                                }}
+                            />
+                        </Group>
+                    </div>
+                </div>
             </Stack>
         </div>
     )

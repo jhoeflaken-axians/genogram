@@ -14,6 +14,7 @@ export const createNodeFactory = <S extends GenogramSymbolType>(symbol: S): Node
         return {
             id,
             type,
+            dragHandle: '.drag-handle',
             position,
             data: {
                 uid: id,
