@@ -1,6 +1,14 @@
 import React from 'react';
 import type {DragEvent} from 'react';
-import {Background, Controls, MiniMap, ReactFlow, type ReactFlowInstance} from "@xyflow/react";
+import {
+    Background,
+    Controls,
+    MiniMap,
+    ReactFlow,
+    type OnEdgesChange,
+    type OnNodesChange,
+    type ReactFlowInstance
+} from "@xyflow/react";
 
 import diagramClasses from '../diagram.module.css';
 import type {GenogramNode} from "@/features/diagram/types/nodes.ts";
@@ -14,9 +22,11 @@ const nodeTypes = {
     pet: PersonNode
 };
 
-interface CanvasProps {
+export interface CanvasProps {
     nodes: GenogramNode[];
     edges: GenogramEdge[];
+    onNodesChange: OnNodesChange<GenogramNode>;
+    onEdgesChange: OnEdgesChange<GenogramEdge>;
     onInit?: (instance: ReactFlowInstance<GenogramNode, GenogramEdge>) => void;
     onDrop?: (event: DragEvent<HTMLDivElement>) => void;
     onDragOver?: (event: DragEvent<HTMLDivElement>) => void;
@@ -27,13 +37,15 @@ interface CanvasProps {
  *
  * @constructor
  */
-export const Canvas: React.FC<CanvasProps> = ({nodes, edges, onInit, onDrop, onDragOver}) => {
+export const Canvas: React.FC<CanvasProps> = ({nodes, edges, onNodesChange, onEdgesChange, onInit, onDrop, onDragOver}) => {
 
     return (
         <div className={diagramClasses.flowWrapper}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
                 nodeTypes={nodeTypes}
                 onInit={onInit}
                 onDrop={onDrop}

@@ -1,6 +1,6 @@
 import React from "react";
 import type { DragEvent } from 'react';
-import {Canvas} from "@/features/diagram";
+import {Canvas} from "./Canvas";
 
 import diagramClasses from '../diagram.module.css';
 import {Toolbar} from "@/features/diagram/components/Toolbar.tsx";
@@ -20,15 +20,15 @@ import type {GenogramSymbolType} from "@/core/domain/genogram.ts";
 export const GenogramDiagram: React.FC = () => {
 
     const [reactFlowInstance, setReactFlowInstance] = React.useState<ReactFlowInstance<GenogramNode, GenogramEdge> | null>(null);
-    const [nodes, setNodes] = useNodesState<GenogramNode>([]);
-    const [edges] = useEdgesState<GenogramEdge>([]);
+    const [nodes, setNodes, onNodesChange] = useNodesState<GenogramNode>([]);
+    const [edges, , onEdgesChange] = useEdgesState<GenogramEdge>([]);
 
 
     const [selectedNodeIds] = React.useState<string[]>([]);
     const [highlightLineage] = React.useState(false);
 
     /**
-     * Handles the drop event on the diagram area. It creates a new node with the symbol type and position of the
+     * Handles the drop event in the diagram area. It creates a new node with the symbol type and position of the
      * drop.
      */
     const handleDrop = React.useCallback((event: DragEvent<HTMLDivElement>) => {
@@ -59,6 +59,8 @@ export const GenogramDiagram: React.FC = () => {
             <Canvas
                 nodes={nodes}
                 edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
                 onInit={setReactFlowInstance}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
